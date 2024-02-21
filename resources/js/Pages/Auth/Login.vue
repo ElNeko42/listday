@@ -24,12 +24,15 @@
 
 
                     <form action="#" class="mt-8 grid grid-cols-6 gap-6">
-                        <InputLabel
+                        <div class="col-span-6">
+                          <InputLabel
                         label="Email"
                         v-model:inputValue="userEmail"
                         type="email"
                         inputId="user-email"
-                      />
+                      />   
+                        </div>
+                       
 
                         <div class="col-span-6 sm:col-span-3">
                             <label for="LastName" class="block text-sm font-medium text-gray-700">

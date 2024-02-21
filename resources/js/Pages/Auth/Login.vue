@@ -40,7 +40,12 @@
                                 @click="handleLogin" />
 
                             <p class="mt-4 text-sm text-gray-500 sm:mt-0">
-                                <a href="#" class="text-gray-700 underline">haz olvidado la contraseña?</a>.
+                                <Link
+                                text="¿Has olvidado la contraseña?"
+                                url="#"
+                                linkClass="clases-adicionales"
+                                @click="handleForgotPassword"
+                              />
                             </p>
                         </div>
                     </form>
@@ -54,10 +59,13 @@
 import { Input } from 'postcss';
 import InputLabel from '../../MyComponents/InputLabel.vue';
 import Button from '../../MyComponents/Button.vue';
+import Link from '../../MyComponents/Link.vue';
+
 export default {
     components: {
         InputLabel,
         Button,
+        Link,
         Input
     },
     data() {

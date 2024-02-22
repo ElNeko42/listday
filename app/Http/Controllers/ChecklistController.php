@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Checklist;
 
 class ChecklistController extends Controller
 {
@@ -28,7 +29,21 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'date' => 'nullable|date',
+           
+        ]);
+
+        $task = Checklist::create([
+            'user_id' => 1,
+            'task' => $request->name,
+            'completed' => false, 
+            'priority' => 0, 
+            'due_date' => $request->date,
+        ]);
+
+        return response()->json($task, 201);
     }
 
     /**

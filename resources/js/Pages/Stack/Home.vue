@@ -28,6 +28,7 @@ import Header from '../../MyComponents/Header.vue';
 import InputAnimate from '../../MyComponents/InputAnimate.vue';
 import Button from '../../MyComponents/Button.vue';
 import TaskList from '../../MyComponents/TaskList.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -54,16 +55,31 @@ export default {
         return;
       }
 
+      // Formatear la fecha a YYYY-MM-DD
+      let formattedDate = this.date;
+      if (this.date) {
+        const dateObject = new Date(this.date);
+        formattedDate = dateObject.toISOString().split('T')[0];
+      }
+
       // Crear un nuevo objeto de tarea
       const newTask = {
         name: this.stack,
         completed: false,
-        date: this.date || new Date().toISOString().substr(0, 10), // Formato YYYY-MM-DD
+        date: formattedDate, // Usar la fecha formateada
       };
 
-      // Añadir la nueva tarea al array de tareas
-      this.tasks.push(newTask);
+      // Enviar la solicitud a la API
+      axios.post('/api/tasks', newTask)
+        .then(response => {
+          console.log('Tarea guardada:', response.data);
+          this.tasks.push(newTask);
+        })
+        .catch(error => {
+          console.error('Hubo un error al guardar la tarea:', error.response);
+        });
 
+      // Limpiar los campos
       this.stack = '';
       this.date = '';
     },

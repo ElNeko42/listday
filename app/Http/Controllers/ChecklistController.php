@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Checklist;
-
+use Carbon\Carbon;
 class ChecklistController extends Controller
 {
     /**
@@ -14,7 +14,10 @@ class ChecklistController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $tasks = $user->tasks;
+        $today = Carbon::today();
+
+        
+        $tasks = $user->tasks()->whereDate('due_date', $today)->get();
 
         return response()->json($tasks);
     }
@@ -92,5 +95,21 @@ class ChecklistController extends Controller
     
         return response()->json(['message' => 'Tarea eliminada con éxito']);
     }
-    
+    /**
+     * Buscar tareas por rango de fechas
+     */
+    public function search(Request $request)
+    {
+        $startDate = $request->start;
+        $endDate = $request->end;
+
+        $user = auth()->user();
+        
+        $tasks = Checklist::where('user_id', $user->id)
+                          ->whereDate('due_date', '>=', $startDate)
+                          ->whereDate('due_date', '<=', $endDate)
+                          ->get();
+
+        return response()->json($tasks);
+    }
 }

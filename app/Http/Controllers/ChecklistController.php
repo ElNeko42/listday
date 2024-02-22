@@ -13,7 +13,10 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        $tasks = $user->tasks;
+
+        return response()->json($tasks);
     }
 
     /**
@@ -32,14 +35,14 @@ class ChecklistController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'nullable|date',
-           
+
         ]);
 
         $task = Checklist::create([
             'user_id' => auth()->id(),
             'task' => $request->name,
-            'completed' => false, 
-            'priority' => 0, 
+            'completed' => false,
+            'priority' => 0,
             'due_date' => $request->date,
         ]);
 
@@ -68,6 +71,17 @@ class ChecklistController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function updateCheck(Request $request, Checklist $task)
+    {
+        $validatedData = $request->validate([
+            'completed' => 'required|boolean',
+        ]);
+
+        $task->update($validatedData);
+
+        return response()->json($task);
     }
 
     /**

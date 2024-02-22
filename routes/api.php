@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ChecklistController;
+use App\Models\Checklist;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/tasks', [ChecklistController::class, 'index'])->middleware('auth:sanctum');
+
 Route::post('/tasks', [ChecklistController::class, 'store'])->middleware('auth:sanctum');
+Route::patch('/tasks/{task}', [ChecklistController::class, 'updateCheck'])->middleware('auth:sanctum');
+
 
 

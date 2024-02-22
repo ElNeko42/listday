@@ -11,9 +11,14 @@ class Checklist extends Model
 
     protected $fillable = ['user_id', 'task', 'completed', 'priority', 'due_date'];
 
+    protected $casts = [
+        'completed' => 'boolean', 
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 }
+
 

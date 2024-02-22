@@ -42,12 +42,24 @@ export default {
       stack: '',
       date: '',
       tasks: [
-        { name: 'Tarea 1', completed: false },
-        { name: 'Tarea 2', completed: true },
+        { task: 'Tarea 1', completed: false },
+        { task: 'Tarea 2', completed: true },
       ],
     };
   },
+  mounted() {
+    this.loadTasks();
+  },
   methods: {
+    loadTasks() {
+      axios.get('/api/tasks')
+        .then(response => {
+          this.tasks = response.data;
+        })
+        .catch(error => {
+          console.error('Hubo un error al cargar las tareas:', error.response);
+        });
+    },
     addStack() {
       // Verificar que el nombre de la tarea no esté vacío
       if (this.stack.trim() === '') {

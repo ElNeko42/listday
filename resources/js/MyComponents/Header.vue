@@ -49,9 +49,10 @@
     </header>
 </template>
 <script>
-import Link from '../../MyComponents/Link.vue';
+import Link from './Link.vue';
 
 export default {
+    name: 'Header',
     components: {
         Link,
     },

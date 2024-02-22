@@ -29,7 +29,8 @@
                         </div>
 
                         <div class="col-span-6">
-                            <InputLabel label="Password" v-model:inputValue="userPassword" type="password" inputId="user-password" />
+                            <InputLabel label="Password" v-model:inputValue="userPassword" type="password"
+                                inputId="user-password" />
                         </div>
 
 
@@ -37,7 +38,7 @@
                         <div class="col-span-6 ">
                             <Button buttonText="Iniciar sesión"
                                 buttonClass="border border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 focus:ring active:text-blue-500"
-                                @click="handleLogin" />     
+                                @click="handleLogin" />
                         </div>
                     </form>
                 </div>
@@ -51,6 +52,7 @@ import { Input } from 'postcss';
 import InputLabel from '../../MyComponents/InputLabel.vue';
 import Button from '../../MyComponents/Button.vue';
 import Link from '../../MyComponents/Link.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 export default {
     components: {
@@ -73,10 +75,14 @@ export default {
                 });
 
                 console.log('Inicio de sesión exitoso:', response.data);
+                localStorage.setItem('auth_token', response.data.token);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+                this.$inertia.visit('/home');
             } catch (error) {
                 console.error('Error en el inicio de sesión:', error.response);
             }
         }
+
     }
 
 

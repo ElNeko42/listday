@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="col-span-6 ">
-                            <InputLabel label="Password" type="password" inputId="user-password" />
+                            <InputLabel label="Password"  v-model:inputValue="userPassword" type="password" inputId="user-password" />
                         </div>
 
 

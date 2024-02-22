@@ -33,12 +33,15 @@
                                 inputId="user-password" />
                         </div>
 
-
-
-                        <div class="col-span-6 ">
+                        <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                             <Button buttonText="Iniciar sesión"
                                 buttonClass="border border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 focus:ring active:text-blue-500"
                                 @click="handleLogin" />
+
+                            <p class="mt-4 text-sm text-gray-500 sm:mt-0">
+                                <Link text="crear cuenta nueva" url="/register" linkClass="clases-adicionales"
+                                    @click="goToRegister" />
+                            </p>
                         </div>
                     </form>
                 </div>
@@ -81,6 +84,9 @@ export default {
             } catch (error) {
                 console.error('Error en el inicio de sesión:', error.response);
             }
+        },
+        goToRegister() {
+            this.$inertia.visit('/register');
         }
 
     }

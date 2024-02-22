@@ -68,19 +68,20 @@ class ChecklistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  Checklist $task)
     {
-        //
+        $task->update([
+            'task' => $request->task,
+            
+        ]);
+        return response()->json($task);
     }
 
     public function updateCheck(Request $request, Checklist $task)
     {
-        $task->update([
-            'completed' => $request->completed,
-        ]);
+        echo $task;
     
 
-        return response()->json($task);
     }
 
     /**

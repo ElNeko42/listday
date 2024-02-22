@@ -29,6 +29,8 @@ Route::get('/tasks', [ChecklistController::class, 'index'])->middleware('auth:sa
 
 Route::post('/tasks', [ChecklistController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('/tasks/{task}', [ChecklistController::class, 'updateCheck'])->middleware('auth:sanctum');
+Route::put('/task/{task}', [ChecklistController::class, 'update'])->middleware('auth:sanctum');
+
 
 
 

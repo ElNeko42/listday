@@ -1,23 +1,36 @@
 <template>
     <div class="space-y-4">
         <div class="mt-5">
-
             <ul class="space-y-3">
                 <li v-for="(task, index) in tasks" :key="index"
                     class="flex items-center justify-between p-3 rounded shadow">
                     <div class="flex items-center">
                         <input type="checkbox" v-model="task.completed" @change="toggleTaskCompletion(task)"
                             class="mr-2 h-4 w-4">
-                        <span :class="{ 'line-through': task.completed }">{{ task.task }}</span>
+                        <!-- Mostrar input o span según el estado de edición -->
+                        <template v-if="task.isEditing">
+                            <input type="text" v-model="task.task" class="mr-2">
+                        </template>
+                        <template v-else>
+                            <span :class="{ 'line-through': task.completed }">{{ task.task }}</span>
+                        </template>
                     </div>
                     <div class="flex items-center">
-                        <button @click="editTask(task)" class="p-1.5 mr-2 text-blue-500 hover:bg-blue-100 rounded">
-                            <i class="fas fa-pencil-alt"></i>
-
-                        </button>
-                        <button @click="deleteTask(task)" class="p-1.5 text-red-500 hover:bg-red-100 rounded">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <!-- Mostrar botones de editar o aceptar/cancelar según el estado de edición -->
+                        <template v-if="task.isEditing">
+                            <button @click="confirmEdit(task)"
+                                class="p-1.5 mr-2 text-green-500 hover:bg-green-100 rounded">✓</button>
+                            <button @click="cancelEditing(task)"
+                                class="p-1.5 text-gray-500 hover:bg-gray-100 rounded">✕</button>
+                        </template>
+                        <template v-else>
+                            <button @click="startEditing(task)" class="p-1.5 mr-2 text-blue-500 hover:bg-blue-100 rounded">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button @click="deleteTask(task)" class="p-1.5 text-red-500 hover:bg-red-100 rounded">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </template>
                     </div>
                 </li>
             </ul>
@@ -46,8 +59,25 @@ export default {
                     // No es necesario revertir el cambio aquí ya que no hemos cambiado el estado local aún
                 });
         },
-        editTask(task) {
-
+        startEditing(task) {
+            task.originalTask = task.task;
+            task.isEditing = true;
+        },
+        cancelEditing(task) {
+            task.task = task.originalTask;
+            task.isEditing = false;
+        },
+        confirmEdit(task) {
+            console.log('Tarea actualizada:', task.task);
+            task.isEditing = false;
+            // Envía el nombre de la tarea actualizado al servidor
+            axios.put(`/api/task/${task.id}`, { task: task.task })
+                .then(response => {
+                    console.log('Tarea actualizada:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error al actualizar la tarea:', error);
+                });
         },
         deleteTask(task) {
 

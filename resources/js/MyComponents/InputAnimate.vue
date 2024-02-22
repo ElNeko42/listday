@@ -6,8 +6,8 @@
       <input
         :type="type"
         :id="id"
-        v-model="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        :value="modelValue" 
+        @input="$emit('update:modelValue', $event.target.value)" 
         class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
         :placeholder="label"
       />
@@ -24,7 +24,7 @@
   export default {
     name: 'InputAnimate',
     props: {
-      modelValue: [String, Number], 
+      modelValue: [String, Number],
       type: {
         type: String,
         default: 'text', 

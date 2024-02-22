@@ -13,12 +13,14 @@ Route::get('/', function () {
     ]);
 });
 
-// La ruta /home puede ser protegida por el middleware de sanctum
-// Asegúrate de que tus rutas de Inertia.js están agrupadas bajo el middleware 'web'
+Route::get('/home', function () {
+    return Inertia::render('Stack/Home');
+})->name('home');
+
 Route::middleware(['web', 'auth:sanctum'])->group(function () {
-    Route::get('/home', function () {
-        return Inertia::render('Stack/Home');
-    })->name('home');
+    // Route::get('/home', function () {
+    //     return Inertia::render('Stack/Home');
+    // })->name('home');
     
     // Otras rutas protegidas por sanctum
 });

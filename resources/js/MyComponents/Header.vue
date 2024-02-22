@@ -74,7 +74,7 @@ export default {
             this.isMenuOpen = !this.isMenuOpen;
         },
         goToLogin() {
-            // Lógica para redirigir al login
+            this.$inertia.visit('/login');
         },
     },
 };

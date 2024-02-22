@@ -1,6 +1,5 @@
 <template>
     <div class="space-y-4">
-      <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl">Mis Tareas</h1>
       <div class="mt-5">
         <!-- Lista de tareas -->
         <ul class="space-y-3">

@@ -23,7 +23,8 @@
                     </h1>
 
 
-                    <form action="#" class="mt-8 grid grid-cols-6 gap-6">
+                    <form @submit.prevent="handleRegistration" class="mt-8 grid grid-cols-6 gap-6">
+
                         <div class="col-span-6">
                             <InputLabel label="Nombre" v-model:inputValue="userName" type="text" inputId="user-name" />
                         </div>
@@ -40,15 +41,11 @@
                         <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                             <Button buttonText="Registrarse"
                                 buttonClass="border border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 focus:ring active:text-blue-500"
-                                @click="handleLogin" />
+                                @click="handleRegistration" />
 
                             <p class="mt-4 text-sm text-gray-500 sm:mt-0">
-                                <Link
-                                text="¿Ya tienes cuenta? Inicia sesión"
-                                url="#"
-                                linkClass="clases-adicionales"
-                                @click="handleForgotPassword"
-                              />
+                                <Link text="¿Ya tienes cuenta? Inicia sesión" url="/login" linkClass="clases-adicionales"
+                                    @click="goTologin" />
                             </p>
                         </div>
                     </form>
@@ -59,6 +56,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { Input } from 'postcss';
 import InputLabel from '../../MyComponents/InputLabel.vue';
 import Button from '../../MyComponents/Button.vue';
@@ -74,8 +72,36 @@ export default {
     data() {
         return {
             userEmail: '',
-            userAge: null
-        }
-    }
-}
+            userName: '',
+            userPassword: '',
+        };
+    },
+    methods: {
+        async handleRegistration() {
+            // Aquí puedes agregar validaciones antes de enviar los datos
+            if (this.validateInput()) {
+                try {
+                    const response = await axios.post('/api/register', {
+                        name: this.userName,
+                        email: this.userEmail,
+                        password: this.userPassword,
+                    });
+                    console.log('Registro exitoso:', response.data);
+                } catch (error) {
+                    console.error('Error en el registro:', error.response);
+                }
+            }
+        },
+        validateInput() {
+            if (!this.userName || !this.userEmail || !this.userPassword) {
+                alert('Por favor, completa todos los campos.');
+                return false;
+            }
+            return true;
+        },
+        goTologin() {
+            this.$router.push('/login');
+        },
+    },
+};
 </script>

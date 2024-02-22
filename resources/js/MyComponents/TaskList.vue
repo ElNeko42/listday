@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
       <div class="mt-5">
-        <!-- Lista de tareas -->
+        
         <ul class="space-y-3">
           <li v-for="(task, index) in tasks" :key="index" class="flex items-center justify-between p-3 rounded shadow">
             <div class="flex items-center">

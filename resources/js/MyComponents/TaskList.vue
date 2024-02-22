@@ -33,26 +33,19 @@ export default {
     },
     methods: {
         toggleTaskCompletion(task) {
-            const originalCompletedState = task.completed;
-            // Optimista UI update
-            task.completed = !task.completed;
-
+            // Envía el nuevo estado al servidor
             axios.patch(`/api/tasks/${task.id}`, { completed: task.completed })
                 .then(response => {
-                    const updatedTask = response.data;
-                    const index = this.tasks.findIndex(t => t.id === updatedTask.id);
-                    if (index !== -1) {
-                        // Reemplaza el objeto de la tarea con uno nuevo para forzar la actualización de la UI
-                        this.tasks.splice(index, 1, Object.assign({}, this.tasks[index], updatedTask));
-                    }
+                    // Si la respuesta es exitosa, actualiza el estado de la tarea en el componente
+                    // Asegúrate de que la respuesta del servidor incluya el estado actualizado de la tarea
+                    // y actualiza el componente de acuerdo a esa respuesta para mantener la sincronización
+                    task.completed = response.data.completed; // Asume que response.data.completed es el estado actualizado
                 })
                 .catch(error => {
-                    console.error('Error al actualizar la tarea:', error.response);
-                    // Revertir el cambio en la interfaz de usuario si la actualización falla
-                    task.completed = originalCompletedState;
+                    console.error('Error al actualizar la tarea:', error);
+                    // No es necesario revertir el cambio aquí ya que no hemos cambiado el estado local aún
                 });
         },
-
         editTask(task) {
 
         },

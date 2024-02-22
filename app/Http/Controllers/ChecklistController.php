@@ -75,11 +75,10 @@ class ChecklistController extends Controller
 
     public function updateCheck(Request $request, Checklist $task)
     {
-        $validatedData = $request->validate([
-            'completed' => 'required|boolean',
+        $task->update([
+            'completed' => $request->completed,
         ]);
-
-        $task->update($validatedData);
+    
 
         return response()->json($task);
     }

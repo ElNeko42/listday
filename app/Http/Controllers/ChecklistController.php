@@ -72,7 +72,7 @@ class ChecklistController extends Controller
     {
         $task->update([
             'task' => $request->task,
-            
+
         ]);
         return response()->json($task);
     }
@@ -80,15 +80,17 @@ class ChecklistController extends Controller
     public function updateCheck(Request $request, Checklist $task)
     {
         echo $task;
-    
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Checklist $task)
     {
-        //
+        // Aquí va la lógica para eliminar la tarea
+        $task->delete();
+    
+        return response()->json(['message' => 'Tarea eliminada con éxito']);
     }
+    
 }

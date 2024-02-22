@@ -80,8 +80,22 @@ export default {
                 });
         },
         deleteTask(task) {
+            if (confirm('¿Estás seguro de querer eliminar esta tarea?')) {
+                axios.delete(`/api/tasks/${task.id}`)
+                    .then(response => {
+                        // Eliminar la tarea del array de tareas en el frontend
+                        const index = this.tasks.findIndex(t => t.id === task.id);
+                        if (index !== -1) {
+                            this.tasks.splice(index, 1);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al eliminar la tarea:', error);
 
+                    });
+            }
         }
+
     }
 }
 </script>

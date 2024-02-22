@@ -36,7 +36,7 @@ class ChecklistController extends Controller
         ]);
 
         $task = Checklist::create([
-            'user_id' => 1,
+            'user_id' => auth()->id(),
             'task' => $request->name,
             'completed' => false, 
             'priority' => 0, 

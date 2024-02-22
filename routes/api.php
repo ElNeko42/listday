@@ -23,6 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/tasks', [ChecklistController::class, 'store']);
+Route::post('/tasks', [ChecklistController::class, 'store'])->middleware('auth:sanctum');
 
 

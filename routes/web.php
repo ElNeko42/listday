@@ -13,14 +13,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', function () {
-    return Inertia::render('Stack/Home');
-})->name('home');
+// Route::get('/home', function () {
+//     return Inertia::render('Stack/Home');
+// })->name('home');
 
 Route::middleware(['web', 'auth:sanctum'])->group(function () {
-    // Route::get('/home', function () {
-    //     return Inertia::render('Stack/Home');
-    // })->name('home');
+    Route::get('/home', function () {
+        return Inertia::render('Stack/Home');
+    })->name('home');
     
     // Otras rutas protegidas por sanctum
 });

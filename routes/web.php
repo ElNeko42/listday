@@ -1,28 +1,18 @@
 <?php
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Redirect::route('login');
 });
-
-// Route::get('/home', function () {
-//     return Inertia::render('Stack/Home');
-// })->name('home');
 
 Route::middleware(['web', 'auth:sanctum'])->group(function () {
     Route::get('/home', function () {
         return Inertia::render('Stack/Home');
     })->name('home');
     
-    // Otras rutas protegidas por sanctum
 });
 
 // Rutas para el perfil del usuario, también protegidas por sanctum

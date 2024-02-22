@@ -36,14 +36,14 @@ class ChecklistController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'task' => 'required|string|max:255',
             'date' => 'nullable|date',
 
         ]);
 
         $task = Checklist::create([
             'user_id' => auth()->id(),
-            'task' => $request->name,
+            'task' => $request->task,
             'completed' => false,
             'priority' => 0,
             'due_date' => $request->date,

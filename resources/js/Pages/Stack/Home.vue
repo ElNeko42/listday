@@ -101,7 +101,7 @@ export default {
 
       // Crear un nuevo objeto de tarea
       const newTask = {
-        name: this.stack,
+        task: this.stack,
         completed: false,
         date: formattedDate, // Usar la fecha formateada
       };

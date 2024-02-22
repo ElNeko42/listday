@@ -34,19 +34,10 @@
 
 
 
-                        <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+                        <div class="col-span-6 ">
                             <Button buttonText="Iniciar sesión"
                                 buttonClass="border border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 focus:ring active:text-blue-500"
-                                @click="handleLogin" />
-
-                            <p class="mt-4 text-sm text-gray-500 sm:mt-0">
-                                <Link
-                                text="¿Has olvidado la contraseña?"
-                                url="#"
-                                linkClass="clases-adicionales"
-                                @click="handleForgotPassword"
-                              />
-                            </p>
+                                @click="handleLogin" />     
                         </div>
                     </form>
                 </div>
@@ -71,8 +62,23 @@ export default {
     data() {
         return {
             userEmail: '',
-            userAge: null
+            userPassword: '',
+        };
+    }, methods: {
+        async handleLogin() {
+            try {
+                const response = await axios.post('/api/login', {
+                    email: this.userEmail,
+                    password: this.userPassword,
+                });
+
+                console.log('Inicio de sesión exitoso:', response.data);
+            } catch (error) {
+                console.error('Error en el inicio de sesión:', error.response);
+            }
         }
     }
+
+
 }
 </script>

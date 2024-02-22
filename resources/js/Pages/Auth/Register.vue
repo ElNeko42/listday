@@ -61,6 +61,7 @@ import { Input } from 'postcss';
 import InputLabel from '../../MyComponents/InputLabel.vue';
 import Button from '../../MyComponents/Button.vue';
 import Link from '../../MyComponents/Link.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 export default {
     components: {
@@ -87,6 +88,7 @@ export default {
                         password: this.userPassword,
                     });
                     console.log('Registro exitoso:', response.data);
+                    Inertia.visit('/login');
                 } catch (error) {
                     console.error('Error en el registro:', error.response);
                 }
@@ -100,7 +102,7 @@ export default {
             return true;
         },
         goTologin() {
-            this.$router.push('/login');
+            Inertia.visit('/login');
         },
     },
 };
